@@ -1,64 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arcade</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIGTOE</title>
 <style>
-:root{--bg:#080b12;--panel:#101520;--panel2:#171d2a;--text:#f7f8fb;--muted:#9aa4b5;--accent:#7c5cff;--border:rgba(255,255,255,.08)}
-*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 50% -20%,#222a49 0,transparent 38%),var(--bg);color:var(--text);min-height:100vh}
-header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;border-bottom:1px solid var(--border);background:rgba(8,11,18,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:20}
-.logo{font-weight:850;font-size:21px;letter-spacing:-.5px}.logo span{color:var(--accent)}
-nav{display:flex;gap:24px}nav a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:650}nav a:hover{color:white}
-main{width:min(1180px,90%);margin:auto;padding:70px 0}
-.hero{text-align:center;max-width:720px;margin:0 auto 55px}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#a997ff;font-weight:800}.hero h1{font-size:clamp(38px,7vw,68px);letter-spacing:-3px;line-height:1;margin:13px 0 16px}.hero p{color:var(--muted);font-size:17px;line-height:1.6;margin:0 auto 30px}
-.search{max-width:600px;margin:auto;position:relative}.search input{width:100%;padding:17px 20px 17px 48px;border:1px solid var(--border);border-radius:16px;background:#111722;color:white;outline:none;font-size:15px;box-shadow:0 15px 50px rgba(0,0,0,.22)}.search input:focus{border-color:#6650d8}.search span{position:absolute;left:18px;top:16px;color:#778197}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.toolbar h2{font-size:23px;margin:0}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:700}.filter.active,.filter:hover{background:var(--accent);color:white;border-color:var(--accent)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px}
-.card{display:block;color:inherit;text-decoration:none;background:var(--panel);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.22s ease}.card:hover{transform:translateY(-5px);border-color:rgba(124,92,255,.55);box-shadow:0 18px 45px rgba(0,0,0,.3)}
-.thumb{aspect-ratio:16/10;background:linear-gradient(135deg,#252c3c,#151a25);display:grid;place-items:center;color:#687187;font-size:42px}.card-body{padding:15px}.card h3{font-size:16px;margin:0 0 6px}.card p{font-size:12px;color:var(--muted);margin:0;text-transform:uppercase;letter-spacing:.8px;font-weight:750}
-.empty{grid-column:1/-1;text-align:center;padding:50px;color:var(--muted)}
-footer{text-align:center;color:#606a7b;font-size:12px;padding:30px}
-@media(max-width:650px){header{padding:0 5%}nav{display:none}main{padding-top:45px}.hero h1{letter-spacing:-2px}.toolbar{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.card-body{padding:12px}}
+:root{--purple:#a72cff;--blue:#6ea8ff;--ink:#050714;--glass:rgba(6,8,25,.78);--line:rgba(156,83,255,.52);--muted:#aeb4d0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:#fff;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#03050d url("assets/bigtoe-bg.png") center top/cover fixed no-repeat}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 50% 0,rgba(60,70,255,.15),transparent 42%),linear-gradient(to bottom,rgba(1,3,12,.08),rgba(1,2,10,.62))}
+.shell{width:min(1220px,92%);margin:auto;padding:42px 0 70px}
+.brand{text-align:center;margin:6px 0 24px}.crown{font-size:34px;color:#c54cff;filter:drop-shadow(0 0 12px #9b26ff);line-height:1}.brand h1{margin:0;font-size:clamp(54px,9vw,105px);font-style:italic;font-weight:1000;letter-spacing:-7px;line-height:.95;background:linear-gradient(180deg,#d8efff 0,#7eb8ff 25%,#b64cff 62%,#ff48df 100%);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 15px rgba(133,56,255,.7));transform:skew(-5deg)}
+.top-actions{position:fixed;right:26px;top:24px;z-index:5;display:flex;gap:4px;padding:6px;border:1px solid var(--line);background:rgba(4,6,20,.82);border-radius:18px;box-shadow:0 0 24px rgba(140,35,255,.25);backdrop-filter:blur(14px)}
+.icon-btn{width:42px;height:38px;border:0;background:transparent;color:#eee;border-radius:12px;font-size:18px;cursor:pointer}.icon-btn:hover{background:rgba(174,64,255,.18)}
+.search{max-width:700px;margin:0 auto 24px;position:relative}.search input{width:100%;height:58px;border-radius:28px;border:1px solid #8844db;background:rgba(3,5,17,.82);box-shadow:0 0 20px rgba(136,44,255,.3),inset 0 0 20px rgba(40,30,90,.18);color:white;font-size:17px;padding:0 24px 0 55px;outline:none;backdrop-filter:blur(12px)}.search input:focus{border-color:#c44cff;box-shadow:0 0 26px rgba(176,54,255,.48)}.search span{position:absolute;left:22px;top:14px;font-size:25px;color:#fff}
+.panel{padding:13px;border:1px solid rgba(113,64,211,.42);border-radius:18px;background:linear-gradient(180deg,rgba(5,8,25,.77),rgba(7,5,22,.86));box-shadow:0 20px 60px rgba(0,0,0,.36);backdrop-filter:blur(16px)}
+.filters{display:flex;gap:10px;overflow:auto;padding:0 0 13px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}
+.filter{flex:0 0 auto;border:1px solid rgba(143,77,225,.55);background:rgba(8,10,28,.72);color:#d9daf0;padding:10px 19px;border-radius:22px;font-weight:650;cursor:pointer}.filter:hover,.filter.active{color:white;border-color:#d45bff;background:linear-gradient(135deg,#7738ff,#c837ff);box-shadow:0 0 16px rgba(176,53,255,.65)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.game-card{border:1px solid rgba(128,92,226,.62);background:linear-gradient(180deg,rgba(19,25,47,.94),rgba(6,7,22,.96));border-radius:14px;overflow:hidden;min-width:0;transition:.2s;cursor:pointer}.game-card:hover{transform:translateY(-4px);border-color:#b449ff;box-shadow:0 0 22px rgba(138,48,255,.26)}
+.thumb{aspect-ratio:16/10;background:linear-gradient(135deg,#1d263d,#12172a);display:grid;place-items:center;color:#39425d;font-size:38px}.meta{padding:12px 13px 13px;position:relative}.meta h3{font-size:14px;margin:0 30px 5px 0}.meta p{font-size:12px;color:#9da5ce;margin:0}.heart{position:absolute;right:12px;top:12px;border:0;background:none;color:#d8dcff;font-size:20px;cursor:pointer}
+.hint{text-align:center;color:#9298b7;font-size:12px;margin-top:15px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(3,1fr)}.top-actions{position:absolute}.brand h1{letter-spacing:-4px}}
+@media(max-width:600px){.shell{padding-top:75px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.panel{padding:10px}.brand h1{font-size:58px}.crown{font-size:25px}.top-actions{right:4%;top:16px}}
 </style>
 </head>
 <body>
-<header><div class="logo">Arcade<span>.</span></div><nav><a href="#">Home</a><a href="#games">Games</a></nav></header>
-<main>
-<section class="hero">
-<div class="eyebrow">Game Library</div>
-<h1>Pick a game.<br>Start playing.</h1>
-<p>A fast, simple library for your browser games.</p>
-<div class="search"><span>⌕</span><input id="search" type="search" placeholder="Search games..." autocomplete="off"></div>
-</section>
-<section id="games">
-<div class="toolbar"><h2>All games</h2><div class="filters" id="filters"></div></div>
+<div class="top-actions"><button class="icon-btn" title="Favorites">☆</button><button class="icon-btn" title="Games">🎮</button><button class="icon-btn" title="Settings">⚙</button></div>
+<main class="shell">
+<section class="brand"><div class="crown">♕</div><h1>BIGTOE</h1></section>
+<div class="search"><span>⌕</span><input id="search" placeholder="Search games..." autocomplete="off"></div>
+<section class="panel">
+<div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
+<div class="hint">Placeholder cards only — edit the game list in index.html when you're ready.</div>
 </section>
 </main>
-<footer>Built for the web.</footer>
 <script>
-// Add your own games here. Put each game in /games/game-name/ and point url to its index.html.
-const games = [
-  // Example:
-  // { title: "My Game", category: "Action", image: "assets/thumbnails/my-game.png", url: "games/my-game/index.html" }
-];
-
-const grid=document.getElementById("grid"), search=document.getElementById("search"), filters=document.getElementById("filters");
+const categories=["All","Action","Adventure","Racing","Sports","Puzzle","Strategy","Multiplayer","Favorites"];
+// These are intentionally placeholders. Change title/category/image later.
+// No card has a game URL yet, so clicking one will NOT leave this page.
+const games=Array.from({length:10},(_,i)=>({title:"Game Name",category:i%2?"Adventure":"Action",image:""}));
 let active="All";
-const categories=["All",...new Set(games.map(g=>g.category))];
-
-function drawFilters(){
- filters.innerHTML=categories.map(c=>`<button class="filter ${c===active?"active":""}" data-cat="${c}">${c}</button>`).join("");
- filters.querySelectorAll("button").forEach(b=>b.onclick=()=>{active=b.dataset.cat;drawFilters();render()});
-}
-function render(){
- const q=search.value.trim().toLowerCase();
- const list=games.filter(g=>(active==="All"||g.category===active)&&g.title.toLowerCase().includes(q));
- if(!list.length){grid.innerHTML='<div class="empty">No games added yet. Add your first game to the <strong>games</strong> array in index.html.</div>';return}
- grid.innerHTML=list.map(g=>`<a class="card" href="${g.url}"><div class="thumb">${g.image?`<img src="${g.image}" alt="" style="width:100%;height:100%;object-fit:cover">`:"🎮"}</div><div class="card-body"><h3>${g.title}</h3><p>${g.category}</p></div></a>`).join("");
-}
-search.addEventListener("input",render);drawFilters();render();
+const grid=document.querySelector("#grid"),filters=document.querySelector("#filters"),search=document.querySelector("#search");
+function drawFilters(){filters.innerHTML=categories.map(c=>'<button class="filter '+(c===active?'active':'')+'" data-cat="'+c+'">'+c+'</button>').join("");filters.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{active=b.dataset.cat;drawFilters();render()})}
+function render(){const q=search.value.toLowerCase().trim();let list=games.filter(g=>g.title.toLowerCase().includes(q)&&(active==="All"||active==="Favorites"||g.category===active));grid.innerHTML=list.map((g,i)=>'<article class="game-card" data-game="'+i+'"><div class="thumb">'+(g.image?'<img src="'+g.image+'" alt="" style="width:100%;height:100%;object-fit:cover">':'▧')+'</div><div class="meta"><h3>'+g.title+'</h3><p>'+g.category+'</p><button class="heart" aria-label="Favorite">♡</button></div></article>').join("")}
+search.oninput=render;drawFilters();render();
 </script>
 </body>
 </html>

@@ -31,18 +31,18 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradi
 <section class="panel">
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
-<div class="hint">Placeholder cards only — edit the game list in index.html when you're ready.</div>
+<div class="hint">Slope is live — the remaining cards are placeholders.</div>
 </section>
 </main>
 <script>
 const categories=["All","Action","Adventure","Racing","Sports","Puzzle","Strategy","Multiplayer","Favorites"];
 // These are intentionally placeholders. Change title/category/image later.
 // No card has a game URL yet, so clicking one will NOT leave this page.
-const games=Array.from({length:10},(_,i)=>({title:"Game Name",category:i%2?"Adventure":"Action",image:""}));
+const games=[{title:"Slope",category:"Action",image:"",url:"games/slope/index.html"},...Array.from({length:9},(_,i)=>({title:"Game Name",category:i%2?"Adventure":"Action",image:"",url:""}))];
 let active="All";
 const grid=document.querySelector("#grid"),filters=document.querySelector("#filters"),search=document.querySelector("#search");
 function drawFilters(){filters.innerHTML=categories.map(c=>'<button class="filter '+(c===active?'active':'')+'" data-cat="'+c+'">'+c+'</button>').join("");filters.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{active=b.dataset.cat;drawFilters();render()})}
-function render(){const q=search.value.toLowerCase().trim();let list=games.filter(g=>g.title.toLowerCase().includes(q)&&(active==="All"||active==="Favorites"||g.category===active));grid.innerHTML=list.map((g,i)=>'<article class="game-card" data-game="'+i+'"><div class="thumb">'+(g.image?'<img src="'+g.image+'" alt="" style="width:100%;height:100%;object-fit:cover">':'▧')+'</div><div class="meta"><h3>'+g.title+'</h3><p>'+g.category+'</p><button class="heart" aria-label="Favorite">♡</button></div></article>').join("")}
+function render(){const q=search.value.toLowerCase().trim();let list=games.filter(g=>g.title.toLowerCase().includes(q)&&(active==="All"||active==="Favorites"||g.category===active));grid.innerHTML=list.map((g,i)=>'<article class="game-card" data-game="'+i+'" data-url="'+(g.url||'')+'"><div class="thumb">'+(g.image?'<img src="'+g.image+'" alt="" style="width:100%;height:100%;object-fit:cover">':'▧')+'</div><div class="meta"><h3>'+g.title+'</h3><p>'+g.category+'</p><button class="heart" aria-label="Favorite">♡</button></div></article>').join("");grid.querySelectorAll(".game-card").forEach(card=>card.onclick=e=>{if(e.target.closest(".heart"))return;const u=card.dataset.url;if(u)location.href=u})}
 search.oninput=render;drawFilters();render();
 </script>
 </body>

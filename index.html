@@ -38,7 +38,7 @@ body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradi
 const categories=["All","Action","Adventure","Racing","Sports","Puzzle","Strategy","Multiplayer","Favorites"];
 // These are intentionally placeholders. Change title/category/image later.
 // No card has a game URL yet, so clicking one will NOT leave this page.
-const games=[{title:"Slope",category:"Action",image:"",url:"games/slope/index.html"},...Array.from({length:9},(_,i)=>({title:"Game Name",category:i%2?"Adventure":"Action",image:"",url:""}))];
+const games=[{title:"Slope",category:"Action",image:"assets/game-logos/slope.png",url:"games/slope/index.html"},...Array.from({length:9},(_,i)=>({title:"Game Name",category:i%2?"Adventure":"Action",image:"",url:""}))];
 let active="All";
 const grid=document.querySelector("#grid"),filters=document.querySelector("#filters"),search=document.querySelector("#search");
 function drawFilters(){filters.innerHTML=categories.map(c=>'<button class="filter '+(c===active?'active':'')+'" data-cat="'+c+'">'+c+'</button>').join("");filters.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{active=b.dataset.cat;drawFilters();render()})}

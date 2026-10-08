@@ -5,8 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FallZone.io - BIGTOE</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -29,16 +32,28 @@
       text-align: center;
       color: white;
       font: 18px Arial, sans-serif;
+      z-index: 10;
     }
   </style>
 </head>
+
 <body>
   <div id="status">Loading FallZone...</div>
   <canvas id="game"></canvas>
 
+  <!-- Temporary fix for missing cursor function -->
+  <script>
+    window.setCursor = function(value) {
+      console.log("Unity requested cursor:", value);
+    };
+  </script>
+
+  <!-- Unity WebGL loader -->
   <script src="build/bca790120e83811a2377d59719115759.loader.js"></script>
+
   <script>
     const build = "build/";
+    const status = document.querySelector("#status");
 
     createUnityInstance(document.querySelector("#game"), {
       dataUrl: build + "f2922761fd2fc4437369dc8dd2a9274d.data",
@@ -49,14 +64,14 @@
       productName: "FallZone",
       productVersion: "1.0"
     }, progress => {
-      document.querySelector("#status").textContent =
+      status.textContent =
         "Loading FallZone... " + Math.round(progress * 100) + "%";
     }).then(() => {
-      document.querySelector("#status").remove();
+      status.remove();
+      console.log("FallZone Unity instance loaded successfully.");
     }).catch(error => {
-      document.querySelector("#status").textContent =
-        "Failed to load FallZone: " + error;
-      console.error(error);
+      status.textContent = "Failed to load FallZone: " + error;
+      console.error("FallZone loading error:", error);
     });
   </script>
 </body>
